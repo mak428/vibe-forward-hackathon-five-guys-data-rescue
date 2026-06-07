@@ -25,8 +25,8 @@ PRIORS: dict[str, tuple[float, float]] = {
     "decimal_shift":      (8.5, 1.5),   # ~85 % — systematic ×10 weight error poisons analytics
     "orphaned_reference": (8.0, 2.0),   # ~80 % — unknown customers = critical audit risk
     "impossible_value":   (7.0, 3.0),   # ~70 % — physically impossible data (dates, quantities)
-    "near_duplicate":     (5.0, 5.0),   # ~50 % — case/whitespace variants break joins
-    "exact_duplicate":    (4.0, 6.0),   # ~40 % — inflates counts but underlying data exists
+    "exact_duplicate":    (5.0, 5.0),   # ~50 % — inflates counts but underlying data exists
+    "near_duplicate":     (4.0, 6.0),   # ~40 % — case/whitespace variants break joins
 }
 
 
