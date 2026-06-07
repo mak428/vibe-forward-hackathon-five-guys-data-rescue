@@ -12,12 +12,21 @@ TOTAL_RECORDS = 5000
 
 # Beta prior (alpha, beta) encodes our domain belief about how audit-critical each issue type is.
 # Higher alpha / lower beta → higher expected severity.
+#
+# The six canonical data-quality issue classes:
+#   1. exact_duplicate      — byte-for-byte copy, different record_id
+#   2. near_duplicate       — same entity, case/whitespace variants
+#   3. unit_format_drift    — silent firmware/system change altered measurement units
+#   4. orphaned_reference   — customer ID absent from master file
+#   5. decimal_shift        — systematic ×10 / ÷10 weight corruption
+#   6. impossible_value     — physically or logically impossible field value
 PRIORS: dict[str, tuple[float, float]] = {
-    "orphaned_reference":   (9.0, 1.0),   # ~90 % — unknown customers = critical audit risk
-    "impossible_value":     (8.0, 2.0),   # ~80 % — physically impossible data
-    "logical_conflict":     (7.0, 3.0),   # ~70 % — status contradicts dates
-    "naming_conflict":      (6.0, 4.0),   # ~60 % — breaks cross-plant joins
-    "duplicate":            (4.0, 6.0),   # ~40 % — inflates counts but data exists
+    "unit_format_drift":  (9.0, 1.0),   # ~90 % — silent, systematic sensor/firmware change
+    "decimal_shift":      (8.5, 1.5),   # ~85 % — systematic ×10 weight error poisons analytics
+    "orphaned_reference": (8.0, 2.0),   # ~80 % — unknown customers = critical audit risk
+    "impossible_value":   (7.0, 3.0),   # ~70 % — physically impossible data (dates, quantities)
+    "near_duplicate":     (5.0, 5.0),   # ~50 % — case/whitespace variants break joins
+    "exact_duplicate":    (4.0, 6.0),   # ~40 % — inflates counts but underlying data exists
 }
 
 
