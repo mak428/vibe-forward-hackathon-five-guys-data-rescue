@@ -1,0 +1,488 @@
+{
+  "unknown_customer_ids": [
+    "CX-A228",
+    "CX-A630",
+    "CX-A901",
+    "CX-A911",
+    "CX-A919",
+    "CX-B183",
+    "CX-B725",
+    "CX-C700",
+    "CX-C949",
+    "CX-D348",
+    "CX-D481",
+    "CX-D614",
+    "CX-D647",
+    "CX-E185",
+    "CX-E260",
+    "CX-E480",
+    "CX-E498",
+    "CX-E878",
+    "CX-F120",
+    "CX-F188",
+    "CX-F760",
+    "CX-G153",
+    "CX-G288",
+    "CX-G559",
+    "CX-G620",
+    "CX-G717",
+    "CX-H317",
+    "CX-H511",
+    "CX-I362",
+    "CX-J221",
+    "CX-J866",
+    "CX-J880",
+    "CX-K229",
+    "CX-K508",
+    "CX-K536",
+    "CX-K654",
+    "CX-K905",
+    "CX-K941",
+    "CX-L102",
+    "CX-L170",
+    "CX-L643",
+    "CX-L705",
+    "CX-M107",
+    "CX-N102",
+    "CX-N218",
+    "CX-N295",
+    "CX-N467",
+    "CX-N823",
+    "CX-O192",
+    "CX-O314",
+    "CX-O343",
+    "CX-O993",
+    "CX-P276",
+    "CX-P282",
+    "CX-P403",
+    "CX-P640",
+    "CX-Q184",
+    "CX-R157",
+    "CX-R455",
+    "CX-R524",
+    "CX-S180",
+    "CX-S305",
+    "CX-S395",
+    "CX-S487",
+    "CX-S848",
+    "CX-T258",
+    "CX-T368",
+    "CX-T507",
+    "CX-T812",
+    "CX-T817",
+    "CX-U126",
+    "CX-U994",
+    "CX-V251",
+    "CX-V657",
+    "CX-W741",
+    "CX-Y199",
+    "CX-Y238",
+    "CX-Z329",
+    "CX-Z551",
+    "CX-Z953"
+  ],
+  "count": 80,
+  "instructions": "Open https://www.geodo.ai in your browser. For each customer ID below, search for the company name or ID. Verify whether it is a real entity (possibly from an acquired plant's CRM). Save your findings to output/geodo_results.json using the template format above.",
+  "results_template": {
+    "CX-A228": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-A630": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-A901": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-A911": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-A919": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-B183": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-B725": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-C700": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-C949": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-D348": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-D481": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-D614": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-D647": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-E185": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-E260": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-E480": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-E498": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-E878": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-F120": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-F188": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-F760": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-G153": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-G288": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-G559": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-G620": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-G717": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-H317": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-H511": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-I362": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-J221": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-J866": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-J880": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-K229": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-K508": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-K536": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-K654": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-K905": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-K941": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-L102": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-L170": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-L643": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-L705": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-M107": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-N102": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-N218": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-N295": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-N467": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-N823": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-O192": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-O314": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-O343": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-O993": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-P276": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-P282": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-P403": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-P640": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-Q184": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-R157": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-R455": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-R524": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-S180": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-S305": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-S395": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-S487": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-S848": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-T258": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-T368": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-T507": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-T812": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-T817": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-U126": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-U994": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-V251": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-V657": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-W741": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-Y199": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-Y238": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-Z329": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-Z551": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    },
+    "CX-Z953": {
+      "verified": false,
+      "company_name": "",
+      "notes": ""
+    }
+  }
+}
