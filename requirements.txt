@@ -1,0 +1,6 @@
+cognee>=0.1.44
+anthropic>=0.40.0
+pandas>=2.0.0
+numpy>=1.24.0
+pymc>=5.10.0
+python-dotenv>=1.0.0

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Harven Manufacturing — Audit Readiness Report</title>
+<style>
+  body  { font-family: Arial, sans-serif; max-width: 960px; margin: 40px auto; padding: 0 24px; color: #222; }
+  h1   { color: #1a1a2e; border-bottom: 3px solid #0f3460; padding-bottom: 8px; }
+  h2   { color: #16213e; margin-top: 32px; }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.92em; }
+  th   { background: #0f3460; color: #fff; padding: 9px 12px; text-align: left; }
+  td   { border: 1px solid #ddd; padding: 8px 12px; }
+  tr:nth-child(even) td { background: #f5f7fa; }
+  .stat-grid { display: flex; gap: 20px; flex-wrap: wrap; margin: 20px 0; }
+  .stat-card { background: #f0f4ff; border-radius: 8px; padding: 16px 24px; flex: 1; min-width: 140px; }
+  .stat-num  { font-size: 2em; font-weight: bold; color: #0f3460; }
+  .stat-lbl  { font-size: 0.85em; color: #555; }
+  .badge     { display: inline-block; padding: 6px 18px; border-radius: 20px; font-weight: bold;
+                font-size: 1.1em; color: #fff; }
+  .red       { background: #c0392b; }
+  .yellow    { background: #e67e22; }
+  .green     { background: #27ae60; }
+  .pipeline  { background: #eef2ff; border-left: 4px solid #4361ee; padding: 12px 16px;
+                border-radius: 4px; font-size: 0.88em; color: #444; margin-top: 40px; }
+</style>
+</head>
+<body>
+
+<h1>Harven Manufacturing — Audit Readiness Report</h1>
+<p>
+  <strong>Generated:</strong> 2026-06-07 14:30 &nbsp;|&nbsp;
+  <strong>Dataset:</strong> track01_data_rescue.csv (5,000 records, Plants A / B / C)
+</p>
+
+<div class="stat-grid">
+  <div class="stat-card"><div class="stat-num">5,000</div><div class="stat-lbl">Input records</div></div>
+  <div class="stat-card"><div class="stat-num">220</div><div class="stat-lbl">Duplicates removed</div></div>
+  <div class="stat-card"><div class="stat-num" style="color:#27ae60">4,635</div><div class="stat-lbl">Audit-ready (CLEAN)</div></div>
+  <div class="stat-card"><div class="stat-num" style="color:#e67e22">65</div><div class="stat-lbl">Need review (FLAGGED)</div></div>
+  <div class="stat-card"><div class="stat-num" style="color:#c0392b">80</div><div class="stat-lbl">Must resolve (ESCALATED)</div></div>
+</div>
+
+**1. EXECUTIVE SUMMARY**
+
+We have made substantial progress towards audit readiness, automatically correcting several data issues. However, the biggest risk lies in the unresolved orphaned customer references, which must be addressed to avoid failing the audit. Immediate action is required from human reviewers to resolve escalated issues and review flagged items.
+
+**2. WHAT WE FIXED AUTOMATICALLY**
+
+We have successfully corrected the majority of naming conflicts, specifically separator mismatches and malformed part numbers. Additionally, semantic duplicates and a few cases of "ship before production" errors have been automatically resolved, ensuring cleaner data.
+
+**3. WHAT NEEDS HUMAN REVIEW BEFORE THE AUDIT**
+
+<table>
+  <tr>
+    <th>Issue</th>
+    <th>Description</th>
+    <th>Number of Records</th>
+  </tr>
+  <tr>
+    <td>impossible_value/weight_inflation</td>
+    <td>Records indicating weight increases beyond logical limits.</td>
+    <td>35</td>
+  </tr>
+  <tr>
+    <td>impossible_value/ship_before_production</td>
+    <td>Ship dates listed before production dates, requiring verification.</td>
+    <td>8</td>
+  </tr>
+  <tr>
+    <td>impossible_value/non_positive_quantity</td>
+    <td>Records showing zero or negative quantities, needing correction.</td>
+    <td>5</td>
+  </tr>
+  <tr>
+    <td>logical_conflict/status_future_ship_date</td>
+    <td>Inconsistencies with future ship dates relative to current status.</td>
+    <td>17</td>
+  </tr>
+  <tr>
+    <td>logical_conflict/future_production_date</td>
+    <td>Records with future dates inconsistent with production schedules.</td>
+    <td>5</td>
+  </tr>
+</table>
+
+**4. WHAT MUST BE RESOLVED OR THE AUDIT WILL FAIL**
+
+<table>
+  <tr>
+    <th>Issue</th>
+    <th>Description</th>
+    <th>Number of Records</th>
+  </tr>
+  <tr>
+    <td>orphaned_reference/unknown_customer_id</td>
+    <td>Records that reference non-existent customer IDs, potentially leading to failed audit.</td>
+    <td>80</td>
+  </tr>
+</table>
+
+**5. AUDIT READINESS VERDICT: RED**
+
+The audit readiness is rated as RED because there are escalated issues related to unknown customer IDs that must be resolved to prevent audit failure. Immediate focus is essential.
+
+<div class="pipeline">
+  <strong>Pipeline:</strong>
+  Agent 1 — Find It &nbsp;→&nbsp;
+  Agent 2 — Rank It (PyMC Bayesian severity) &nbsp;→&nbsp;
+  Agent 3 — Act On It (Geodo entity validation) &nbsp;→&nbsp;
+  Agent 4 — Explain It (Claude 2026) &nbsp;|&nbsp;
+  Memory layer: <strong>Cognee</strong>
+</div>
+
+</body>
+</html>
