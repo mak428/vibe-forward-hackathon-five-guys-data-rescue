@@ -21,6 +21,7 @@ from agents.rank_it import rank_issues
 from agents.act_on_it import act_on_issues
 from agents.recommend_it import recommend_actions
 from agents.explain_it import explain_findings
+from agents.geodo_agent import run_geodo_research
 from utils.geodo_bridge import export_geodo_lookup
 from utils.schema_detect import detect_schema, save_schema
 
@@ -71,9 +72,11 @@ async def main():
     print("\n[1/5] Agent 1 — FIND IT  (6 issue classes, per-part statistical baselining)")
     issues = await find_issues()
 
-    # Export Geodo lookup list immediately after finding orphaned customer IDs
-    print("\n[Geodo] Exporting unknown entity IDs for manual validation …")
+    # Export lookup list then auto-research via Geodo agent
+    print("\n[Geodo] Exporting unknown entity IDs …")
     export_geodo_lookup()
+    print("\n[1.5/5] Agent 6 — GEODO RESEARCH  (auto-verify unknown customer IDs)")
+    await run_geodo_research()
 
     # ── Agent 2 — Rank It (PyMC) ───────────────────────────────────────────────
     print("\n[2/5] Agent 2 — RANK IT  (PyMC Bayesian 3-method convergence)")
@@ -100,6 +103,7 @@ async def main():
     print(f"  Audit log        : {OUTPUT_DIR}/audit_log.json")
     print(f"  Recommendations  : {OUTPUT_DIR}/recommendations.json")
     print(f"  Geodo lookup     : {OUTPUT_DIR}/geodo_lookup_list.json")
+    print(f"  Geodo results    : {OUTPUT_DIR}/geodo_results.json")
     print("=" * 64)
 
     # Final Cognee memory (vector-only, no LLM)

@@ -263,6 +263,7 @@ async def act_on_issues(ranked: list[dict] | None = None) -> dict:
         + "; ".join(f"{a['action']} {a['records_affected']} ({a['issue']})" for a in audit_log)
     )
     await cognee.add(cognee_summary, dataset_name="data_rescue")
+    await cognee.cognify()
 
     print(f"[Agent 3 — Act On It]  in={len(df)}  removed={len(indices_to_drop)}  out={len(df_clean)}")
     print(f"  CLEAN={n_clean}  FLAGGED={n_flagged}  ESCALATED={n_escalated}")

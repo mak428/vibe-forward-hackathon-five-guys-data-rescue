@@ -184,6 +184,7 @@ async def rank_issues(issues: list[dict] | None = None) -> list[dict]:
         )
     )
     await cognee.add(ranking_summary, dataset_name="data_rescue")
+    await cognee.cognify()
 
     with open(OUTPUT_DIR / "rankings.json", "w") as f:
         json.dump(ranked, f, indent=2, default=str)

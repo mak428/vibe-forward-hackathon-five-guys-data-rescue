@@ -48,12 +48,18 @@ async def explain_findings(action_summary: dict | None = None, recommendations: 
     from utils.benchmark import score_benchmark
     benchmark = score_benchmark()
 
-    # ── Downloadable CSV as base64 data URI ───────────────────────────────────
+    # ── Load cleaned records for drill-down (flagged + escalated only) ────────
+    import pandas as pd
     cleaned_csv_path = OUTPUT_DIR / "track01_cleaned.csv"
+    drill_records: list[dict] = []
     csv_data_uri = ""
     if cleaned_csv_path.exists():
         csv_b64 = base64.b64encode(cleaned_csv_path.read_bytes()).decode()
         csv_data_uri = f"data:text/csv;base64,{csv_b64}"
+        df_clean = pd.read_csv(cleaned_csv_path)
+        # Embed all non-clean rows for drill-down (cap at 500 to keep HTML size reasonable)
+        non_clean = df_clean[df_clean["audit_status"] != "CLEAN"].head(500)
+        drill_records = non_clean.to_dict(orient="records")
 
     # ── Verdict ───────────────────────────────────────────────────────────────
     if action_summary["escalated"] > 0:
@@ -87,13 +93,23 @@ async def explain_findings(action_summary: dict | None = None, recommendations: 
         for i in range(len(rankings))
     )
 
-    # Decision log rows
+    # Decision log rows — each row has a drill-down button
+    def _drill_js(action: str, issue: str) -> str:
+        flag_tag = issue.split("/")[-1].upper().replace("_", "_")
+        if action == "ESCALATED":
+            return "openDrill(r=>r.audit_status==='ESCALATED','" + issue + "')"
+        elif action == "FLAGGED":
+            return "openDrill(r=>r.audit_flags&&r.audit_flags.includes('" + flag_tag + "'),'" + issue + "')"
+        else:
+            return "openDrill(r=>r.audit_status==='CLEAN','" + issue + " (auto-fixed)')"
+
     decision_rows = "".join(
         f"""<tr>
           <td><span class="badge" style="background:{action_color.get(a['action'],'#888')}">{a['action']}</span></td>
           <td style="color:#e5e7eb">{a['issue']}</td>
           <td style="text-align:right;color:#e5e7eb">{a['records_affected']:,}</td>
           <td style="color:#9ca3af;font-size:0.82em">{a['justification']}</td>
+          <td><button class="drill-btn" onclick="{_drill_js(a['action'], a['issue'])}">View records</button></td>
         </tr>"""
         for a in action_summary["audit_log"]
     )
@@ -149,13 +165,14 @@ async def explain_findings(action_summary: dict | None = None, recommendations: 
         )
     )
 
-    # Embedded JSON data for chatbot
+    # Embedded JSON data for chatbot + drill-down
     embedded_data = json.dumps({
         "findings": findings,
         "rankings": rankings,
         "audit_log": action_summary["audit_log"],
         "recommendations": recommendations,
         "cognee_snippets": cognee_snippets,
+        "drill_records": drill_records,
         "summary": {
             "total": action_summary["total_input_records"],
             "clean": action_summary["clean"],
@@ -246,6 +263,23 @@ async def explain_findings(action_summary: dict | None = None, recommendations: 
   #chat-input::placeholder {{ color:#4b5563; }}
   #chat-send {{ background:#00c87b; color:#fff; border:none; padding:12px 16px;
                 cursor:pointer; font-weight:700; border-radius:0 0 14px 0; font-size:0.9em; }}
+  /* Drill-down modal */
+  #modal-bg {{ display:none; position:fixed; inset:0; background:rgba(0,0,0,.7); z-index:1100;
+               align-items:center; justify-content:center; }}
+  #modal-bg.open {{ display:flex; }}
+  #modal {{ background:#111827; border:1px solid #2d3748; border-radius:14px; width:92vw; max-width:900px;
+             max-height:82vh; display:flex; flex-direction:column; box-shadow:0 16px 48px rgba(0,0,0,.6); }}
+  #modal-hdr {{ padding:16px 22px; border-bottom:1px solid #2d3748; display:flex; align-items:center;
+                justify-content:space-between; }}
+  #modal-title {{ font-size:0.95em; font-weight:700; color:#e5e7eb; }}
+  #modal-close {{ background:none; border:none; color:#6b7280; font-size:1.4em; cursor:pointer; line-height:1; }}
+  #modal-close:hover {{ color:#e5e7eb; }}
+  #modal-body {{ overflow-y:auto; padding:0; }}
+  #modal-body table {{ font-size:0.8em; }}
+  #modal-body th {{ position:sticky; top:0; background:#0d1117; z-index:1; }}
+  .drill-btn {{ background:none; border:none; cursor:pointer; color:#4a90e2;
+                font-size:0.78em; font-weight:600; padding:0; text-decoration:underline; }}
+  .drill-btn:hover {{ color:#7cb9ff; }}
   /* Responsive */
   @media(max-width:600px) {{ .stat-num {{ font-size:1.8em; }} #chat-wrap {{ width:94vw; right:3vw; }} }}
 </style>
@@ -389,7 +423,7 @@ async def explain_findings(action_summary: dict | None = None, recommendations: 
   <h2 style="color:#e5e7eb;font-size:1.1em;margin-bottom:16px">Full Decision Log (R07)</h2>
   <div class="card">
     <table>
-      <thead><tr><th>Action</th><th>Issue</th><th style="text-align:right">Records</th><th>Justification</th></tr></thead>
+      <thead><tr><th>Action</th><th>Issue</th><th style="text-align:right">Records</th><th>Justification</th><th></th></tr></thead>
       <tbody>{decision_rows}</tbody>
     </table>
   </div>
@@ -428,6 +462,17 @@ async def explain_findings(action_summary: dict | None = None, recommendations: 
     {len(cognee_snippets)} chunks recalled via vector search. Each agent reads prior agents' writes.
   </p>
   <ul style="list-style:none;padding:0">{cognee_items}</ul>
+</div>
+
+<!-- ═══ DRILL-DOWN MODAL ══════════════════════════════════════════════════════ -->
+<div id="modal-bg" onclick="if(event.target===this)closeDrill()">
+  <div id="modal">
+    <div id="modal-hdr">
+      <span id="modal-title">Records</span>
+      <button id="modal-close" onclick="closeDrill()">×</button>
+    </div>
+    <div id="modal-body"></div>
+  </div>
 </div>
 
 <!-- ═══ CHATBOT ════════════════════════════════════════════════════════════════ -->
@@ -541,6 +586,57 @@ async def explain_findings(action_summary: dict | None = None, recommendations: 
   window.toggleChat = function() {{
     document.getElementById('chat-wrap').classList.toggle('hidden');
   }};
+
+  // ── Drill-down: show real records for any issue/flag ─────────────────────
+  const COLS = ['record_id','part_number','customer_id','quantity','weight_kg',
+                'production_date','ship_date','status','audit_flags','audit_status'];
+
+  function buildTable(rows, title) {{
+    if (!rows.length) return '<p style="padding:20px;color:#6b7280">No records found.</p>';
+    const availCols = COLS.filter(c => rows[0][c] !== undefined);
+    const statusColor = {{ ESCALATED:'#ff5c5c', FLAGGED:'#ffb347', CLEAN:'#00c87b' }};
+    let html = '<table><thead><tr>' +
+      availCols.map(c=>`<th>${{c.replace(/_/g,' ')}}</th>`).join('') +
+      '</tr></thead><tbody>';
+    rows.forEach(r => {{
+      const sc = statusColor[r.audit_status] || '#888';
+      html += '<tr>' + availCols.map(c => {{
+        const v = r[c] ?? '';
+        if (c === 'audit_status') return `<td><span class="badge" style="background:${{sc}}">${{v}}</span></td>`;
+        if (c === 'audit_flags' && v) return `<td style="color:#ffb347;font-size:0.85em">${{v}}</td>`;
+        return `<td style="color:#d1d5db">${{String(v).substring(0,40)}}</td>`;
+      }}).join('') + '</tr>';
+    }});
+    html += '</tbody></table>';
+    document.getElementById('modal-title').textContent = title + ` (${{rows.length}} records)`;
+    return html;
+  }}
+
+  window.openDrill = function(filterFn, title) {{
+    const rows = D.drill_records.filter(filterFn);
+    document.getElementById('modal-body').innerHTML = buildTable(rows, title);
+    document.getElementById('modal-bg').classList.add('open');
+  }};
+
+  window.closeDrill = function() {{
+    document.getElementById('modal-bg').classList.remove('open');
+  }};
+
+  // Make stat cards clickable
+  document.addEventListener('DOMContentLoaded', () => {{
+    document.querySelectorAll('.stat-card').forEach(card => {{
+      const lbl = card.querySelector('.stat-lbl')?.textContent || '';
+      if (lbl.includes('Flagged')) {{
+        card.style.cursor='pointer';
+        card.title='Click to view flagged records';
+        card.onclick=()=>openDrill(r=>r.audit_status==='FLAGGED','Flagged Records');
+      }} else if (lbl.includes('Escalated')) {{
+        card.style.cursor='pointer';
+        card.title='Click to view escalated records';
+        card.onclick=()=>openDrill(r=>r.audit_status==='ESCALATED','Escalated Records');
+      }}
+    }});
+  }});
 
   // Tab navigation
   window.showTab = function(name, el) {{

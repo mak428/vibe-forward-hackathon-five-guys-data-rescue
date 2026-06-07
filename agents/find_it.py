@@ -342,6 +342,8 @@ async def find_issues() -> list[dict]:
             dataset_name="data_rescue",
         )
 
+    await cognee.cognify()  # vectorise staged data so downstream agents can search
+
     with open(OUTPUT_DIR / "findings.json", "w") as f:
         json.dump(issues, f, indent=2, default=str)
     with open(OUTPUT_DIR / "dataset_meta.json", "w") as f:

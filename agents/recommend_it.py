@@ -256,6 +256,7 @@ async def recommend_actions(action_summary: dict | None = None) -> list[dict]:
     )
     try:
         await cognee.add(summary, dataset_name="data_rescue")
+        await cognee.cognify()
     except Exception:
         pass
 
