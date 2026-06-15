@@ -1,0 +1,8 @@
+[
+  { "anomaly_id": "A005", "rank": 1, "priority_score": 0.97 },
+  { "anomaly_id": "A001", "rank": 2, "priority_score": 0.92 },
+  { "anomaly_id": "A004", "rank": 3, "priority_score": 0.85 },
+  { "anomaly_id": "A006", "rank": 4, "priority_score": 0.78 },
+  { "anomaly_id": "A002", "rank": 5, "priority_score": 0.65 },
+  { "anomaly_id": "A003", "rank": 6, "priority_score": 0.55 }
+]

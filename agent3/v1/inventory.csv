@@ -1,0 +1,9 @@
+sku,product_name,stock_count,reorder_level,unit_cost
+SKU-1040,Widget A,150,20,10.50
+SKU-1041,Widget B,80,15,8.75
+SKU-1042,Gadget X,200,25,45.00
+SKU-1043,Gadget Y,-42,10,22.00
+SKU-1044,Doohickey Z,60,12,5.99
+SKU-1045,Widget C,90,18,12.00
+SKU-1042,Gadget X,200,25,45.00
+SKU-1046,Thingamajig,35,8,19.99

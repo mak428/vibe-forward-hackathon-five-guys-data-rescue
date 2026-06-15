@@ -1,0 +1,62 @@
+[
+  {
+    "anomaly_id": "A001",
+    "file": "sales.csv",
+    "row": 2,
+    "column": "revenue",
+    "anomaly_type": "outlier",
+    "original_value": 9999999,
+    "description": "Revenue value is ~1000x the column median — likely data entry error.",
+    "severity": 0.9
+  },
+  {
+    "anomaly_id": "A002",
+    "file": "sales.csv",
+    "row": 5,
+    "column": "units_sold",
+    "anomaly_type": "missing",
+    "original_value": null,
+    "description": "units_sold is null; no value recorded for this transaction.",
+    "severity": 0.6
+  },
+  {
+    "anomaly_id": "A003",
+    "file": "sales.csv",
+    "row": 7,
+    "column": "sale_date",
+    "anomaly_type": "format_error",
+    "original_value": "15/03/2024",
+    "description": "Date stored in DD/MM/YYYY instead of standard ISO-8601.",
+    "severity": 0.5
+  },
+  {
+    "anomaly_id": "A004",
+    "file": "sales.csv",
+    "row": 9,
+    "column": "revenue",
+    "anomaly_type": "type_mismatch",
+    "original_value": "1,250.00",
+    "description": "Revenue stored as string with comma-thousands separator instead of float.",
+    "severity": 0.75
+  },
+  {
+    "anomaly_id": "A005",
+    "file": "inventory.csv",
+    "row": 3,
+    "column": "stock_count",
+    "anomaly_type": "range_violation",
+    "original_value": -42,
+    "description": "stock_count cannot be negative; physical stock is non-negative.",
+    "severity": 0.8
+  },
+  {
+    "anomaly_id": "A006",
+    "file": "inventory.csv",
+    "row": 6,
+    "column": "sku",
+    "anomaly_type": "duplicate",
+    "original_value": "SKU-1042",
+    "description": "Exact duplicate of row 1 — same SKU, same all-column values.",
+    "severity": 0.7
+  }
+]

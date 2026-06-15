@@ -1,0 +1,11 @@
+transaction_id,sale_date,product,units_sold,revenue
+T001,2024-01-05,Widget A,10,250.00
+T002,2024-01-06,Widget B,5,125.00
+T003,2024-01-07,Widget A,9999999,9999999
+T004,2024-01-08,Gadget X,8,400.00
+T005,2024-01-09,Widget B,,87.50
+T006,2024-01-10,Gadget X,3,150.00
+T007,15/03/2024,Widget A,12,300.00
+T008,2024-01-12,Gadget X,6,300.00
+T009,2024-01-13,Widget B,25,"1,250.00"
+T010,2024-01-14,Widget A,11,275.00
